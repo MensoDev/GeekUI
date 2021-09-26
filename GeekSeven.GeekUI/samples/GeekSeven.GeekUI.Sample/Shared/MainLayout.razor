@@ -1,0 +1,31 @@
+﻿@inherits LayoutComponentBase
+
+<SplitView Title="BootLEGO" AppLogoIMG="\img\WinUI Library (Alternate Design 2).png" @ref="mySplitView">
+    <HeaderContent>
+
+    </HeaderContent>
+    <PanelContent>
+        <ListView AccentColor="EColor.Danger" IsCompactList="@(!mySplitView.IsOpenPanel)">
+
+            <ListViewItem Title="Introdução" NavigationLink="/" Match="NavLinkMatch.All" IconIMG="\img\WinUI Library.png" />
+
+            <ListViewGroupItem DefaultLink="/splitview" GroupIconIMG="\img\Talent - Core HR.png" GroupName="Layout">
+                <ListViewGroupItemSecondary Title="SplitView" NavigationLink="/splitview" IconMDL2="ESegoeMDL2Assets.VisualStudioIDELogo32" />
+            </ListViewGroupItem>
+
+            <ListViewGroupItem DefaultLink="/buttons" GroupIconIMG="\img\Market Insights Preview.png" GroupName="Components">
+                <ListViewGroupItemSecondary Title="Buttons" NavigationLink="/buttons" IconMDL2="ESegoeMDL2Assets. ConnectVirtualMachine" />
+                <ListViewGroupItemSecondary Title="Error" NavigationLink="/error" IconMDL2="ESegoeMDL2Assets.Cancel" />
+                <ListViewGroupItemSecondary Title="Cards" NavigationLink="/cards" IconMDL2="ESegoeMDL2Assets.ShakeDevice" />
+            </ListViewGroupItem>
+
+        </ListView>
+    </PanelContent>
+    <BodyContent>
+        @Body
+    </BodyContent>
+</SplitView>
+
+@code {
+    public SplitView mySplitView;
+}

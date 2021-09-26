@@ -5,7 +5,11 @@ VisualStudioVersion = 17.0.31717.71
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.0 - APP", "1.0 - APP", "{1FC5BEA8-5AEB-44B3-B995-8F9FB3B5A7FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeekSeven.GeekUI", "src\GeekSeven.GeekUI\GeekSeven.GeekUI.csproj", "{92271F78-B3D1-4DFC-A1BB-13D4479ED332}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeekSeven.GeekUI", "src\GeekSeven.GeekUI\GeekSeven.GeekUI.csproj", "{92271F78-B3D1-4DFC-A1BB-13D4479ED332}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.0 - Samples", "2.0 - Samples", "{31E17943-A333-4079-81DD-2D0664477E0B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeekSeven.GeekUI.Sample", "samples\GeekSeven.GeekUI.Sample\GeekSeven.GeekUI.Sample.csproj", "{C4081F73-16FD-4090-89BA-9FD34E87D5B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +21,17 @@ Global
 		{92271F78-B3D1-4DFC-A1BB-13D4479ED332}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92271F78-B3D1-4DFC-A1BB-13D4479ED332}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92271F78-B3D1-4DFC-A1BB-13D4479ED332}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4081F73-16FD-4090-89BA-9FD34E87D5B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4081F73-16FD-4090-89BA-9FD34E87D5B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4081F73-16FD-4090-89BA-9FD34E87D5B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4081F73-16FD-4090-89BA-9FD34E87D5B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{92271F78-B3D1-4DFC-A1BB-13D4479ED332} = {1FC5BEA8-5AEB-44B3-B995-8F9FB3B5A7FA}
+		{C4081F73-16FD-4090-89BA-9FD34E87D5B9} = {31E17943-A333-4079-81DD-2D0664477E0B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {567AF6CF-1B06-4A4F-9509-1198280214F5}
