@@ -1,0 +1,15 @@
+﻿@namespace GeekSeven.GeekUI.Components
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        @ChildContent
+        <li class="breadcrumb-item active" aria-current="page">@Title</li>
+    </ol>
+</nav>
+
+@code{
+    [Parameter]
+    public string Title { get; set; }
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}

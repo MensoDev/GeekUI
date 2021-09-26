@@ -1,0 +1,12 @@
+﻿@namespace GeekSeven.GeekUI.Components
+
+<li class="nav-item bg-@BackgroundColor.ToString().ToLower()">
+    <a class="nav-link " href="@LinkCommand">@Title</a>
+</li>
+
+@code
+{
+    [Parameter] public string Title { get; set; }
+    [Parameter] public string LinkCommand { get; set; }
+    [Parameter] public EColor BackgroundColor { get; set; } = EColor.Light;
+}

@@ -1,0 +1,18 @@
+﻿@namespace GeekSeven.GeekUI.Components
+
+<li class="nav-item">
+    <button class="btn btn-@BackgroundColor.ToString().ToLower() align-middle" style="height:100%" @onclick="() => OnClickEvent.InvokeAsync(null)">
+
+        @if ((int)Icon != 0)
+        {<span class="mdl2 align-middle mr-1 ">@Icon.ToIcon()</span>}
+        @Title
+    </button>
+</li>
+
+@code
+{
+    [Parameter] public string Title { get; set; }
+    [Parameter] public ESegoeMDL2Assets Icon { get; set; } = ESegoeMDL2Assets.None;
+    [Parameter] public EventCallback OnClickEvent { get; set; }
+    [Parameter] public EColor BackgroundColor { get; set; } = EColor.Light;
+}

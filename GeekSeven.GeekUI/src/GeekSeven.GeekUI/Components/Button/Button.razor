@@ -1,0 +1,48 @@
+﻿@namespace GeekSeven.GeekUI.Components
+
+@switch (ButtonType)
+{
+    case EButtonType.Button:<button type="button" @onclick="OnClickEvent" attributes=" @(IsDisabled ? "disabled":"")" class="btn @(IsOutline ? $"btn-outline-{BackgroundColor.ToString().ToLower()}" : $"btn-{BackgroundColor.ToString().ToLower()}") @(ButtonSize.GetButtonSize()) @(IsBlock ? "btn-block":"")">@ChildContent</button>
+    break;
+case EButtonType.Input:
+    <input type="button" @onclick="OnClickEvent" attributes=" @(IsDisabled ? "disabled":"")" class="btn @(IsOutline ? $"btn-outline-{BackgroundColor.ToString().ToLower()}" : $"btn-{BackgroundColor.ToString().ToLower()}") @(ButtonSize.GetButtonSize()) @(IsBlock ? "btn-block":"")" value="@ChildContent">
+    break;
+case EButtonType.Submit: <button type="submit" @onclick="OnClickEvent" attributes=" @(IsDisabled ? "disabled":"")" class="btn @(IsOutline ? $"btn-outline-{BackgroundColor.ToString().ToLower()}" : $"btn-{BackgroundColor.ToString().ToLower()}") @(ButtonSize.GetButtonSize()) @(IsBlock ? "btn-block":"")">@ChildContent</button>
+break;
+case EButtonType.Link: <a @onclick="OnClickEvent" class="btn @(IsOutline ? $"btn-outline-{BackgroundColor.ToString().ToLower()}" : $"btn-{BackgroundColor.ToString().ToLower()}") @(ButtonSize.GetButtonSize()) @(IsBlock ? "btn-block":"") @(IsDisabled ? "disabled":"")" role="button" href="@Link">@ChildContent</a>
+break;
+case EButtonType.Reset: <button @onclick="OnClickEvent" type="reset" attributes=" @(IsDisabled ? "disabled":"")" aria-disabled="@IsDisabled" class="btn @(IsOutline ? $"btn-outline-{BackgroundColor.ToString().ToLower()}" : $"btn-{BackgroundColor.ToString().ToLower()}") @(ButtonSize.GetButtonSize()) @(IsBlock ? "btn-block":"")">@ChildContent</button>
+break;
+default: <button @onclick="OnClickEvent" type="button" attributes=" @(IsDisabled ? "disabled":"")" class="btn @(IsOutline ? $"btn-outline-{BackgroundColor.ToString().ToLower()}" : $"btn-{BackgroundColor.ToString().ToLower()}") @(ButtonSize.GetButtonSize()) @(IsBlock ? "btn-block":"")">@ChildContent</button>
+break;
+}
+
+@code {
+
+    [Parameter]
+    public EColor BackgroundColor { get; set; }
+
+    [Parameter]
+    public EButtonType ButtonType { get; set; }
+
+    [Parameter]
+    public EButtonSize ButtonSize { get; set; } = EButtonSize.Default;
+
+    [Parameter]
+    public string Link { get; set; } = "#";
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public bool IsOutline { get; set; }
+
+    [Parameter]
+    public bool IsBlock { get; set; }
+
+    [Parameter]
+    public bool IsDisabled { get; set; }
+
+    [Parameter] public EventCallback OnClickEvent { get; set; }
+
+}

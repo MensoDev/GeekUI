@@ -1,0 +1,19 @@
+﻿@namespace GeekSeven.GeekUI.Components
+
+<div class="alert alert-@(AlertColor.ToString().ToLower())" role="alert">
+    @if(Header != null){<h4 class="alert-heading">@Header</h4>}
+    @ChildContent
+</div>
+
+
+@code{
+
+    [Parameter]
+    public EColor AlertColor {get;set;}
+
+    [Parameter]
+    public RenderFragment ChildContent {get;set;}
+    
+    [Parameter]
+    public RenderFragment Header {get;set;}
+}

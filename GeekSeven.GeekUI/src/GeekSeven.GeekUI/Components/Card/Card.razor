@@ -1,0 +1,24 @@
+﻿@namespace GeekSeven.GeekUI.Components
+
+@* <CascadingValue Value="CardId" Name="CardId"> *@
+<div class="card @("bg-"+BackgroundColor.ToString().ToLower()) @("border-"+BorderColor.ToString().ToLower())" style="@(string.IsNullOrEmpty(Width) ? "":$"width:{Width};") ">
+    @ChildContent
+</div>
+@* </CascadingValue> *@
+
+@code {
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public EColor BackgroundColor { get; set; } = EColor.Light;
+
+    [Parameter]
+    public EColor BorderColor { get; set; } = EColor.Light;
+
+    [Parameter]
+    public string Width { get; set; }
+
+    ////protected string CardId {get;set;} = Guid.NewGuid().ToString();
+}

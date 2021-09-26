@@ -1,0 +1,23 @@
+﻿@namespace GeekSeven.GeekUI.Components
+
+
+<li class="nav-item dropdown @(IsShow ? "show":"")" style="cursor:pointer;"  @onclick="(() => IsShow = !IsShow)" @onfocusout="(() => IsShow = false)">
+    <a class="nav-link dropdown-toggle" id="@Id" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="@(!IsShow)">
+        @Title
+    </a>
+    <div class="dropdown-menu @(IsShow ? "show":"")" aria-labelledby="@Id">
+        @ChildContent
+    </div>
+</li>
+
+
+
+@code 
+{
+    private string Id { get; set; } = Guid.NewGuid().ToString().Replace("-", "");
+    [Parameter] public string Title { get; set; }
+    [Parameter] public bool IsShow { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+
+
+}

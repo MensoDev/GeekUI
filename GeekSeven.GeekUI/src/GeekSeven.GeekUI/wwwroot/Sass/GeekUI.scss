@@ -1,0 +1,83 @@
+/*!
+* GeekUI by GEEKSeven
+* GeekUI version 0.1.2.1
+* Copyright 2019-2021 GeekSeven, Inc.
+*  Based in Bootstrap Framework
+*
+* Credits ===================================
+ * Bootstrap v5.1.1 (https://getbootstrap.com/)
+ * Copyright 2011-2021 The Bootstrap Authors
+ * Copyright 2011-2021 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ */
+
+// scss-docs-start import-stack
+// Configuration
+@import "Abstracts/functions"; // GeekUI Override
+@import "Vendors/bootstrap/scss/functions";
+
+@import "Abstracts/variables"; // GeekUI Override
+@import "Vendors/bootstrap/scss/variables";
+
+@import "Abstracts/mixins"; // GeekUI Override
+@import "Vendors/bootstrap/scss/mixins";
+
+@import "Vendors/bootstrap/scss/utilities";
+
+// GeekUI Base 
+//@import "base/reset"; //override root and reboot
+
+@import "base/typography"; //override type
+
+@import "Vendors/bootstrap/scss/root";   //Bootstrap
+@import "Vendors/bootstrap/scss/reboot"; //Bootstrap
+@import "Vendors/bootstrap/scss/type";   //Bootstrap
+
+
+@import "icons.scss";   //GeekUI icons
+
+@import "Components/listview"; // Original GeekUI
+@import "Components/splitview"; // Original GeekUI
+@import "Components/autocomplete"; // Original GeekUI
+
+
+// Layout & components
+@import "Vendors/bootstrap/scss/root";
+@import "Vendors/bootstrap/scss/reboot";
+@import "Vendors/bootstrap/scss/type";
+@import "Vendors/bootstrap/scss/images";
+@import "Vendors/bootstrap/scss/containers";
+@import "Vendors/bootstrap/scss/grid";
+@import "Vendors/bootstrap/scss/tables";
+@import "Vendors/bootstrap/scss/forms";
+@import "Vendors/bootstrap/scss/buttons";
+@import "Components/button"; // GeekUI Override
+@import "Vendors/bootstrap/scss/transitions";
+@import "Vendors/bootstrap/scss/dropdown";
+@import "Vendors/bootstrap/scss/button-group";
+@import "Vendors/bootstrap/scss/nav";
+@import "Vendors/bootstrap/scss/navbar";
+@import "Vendors/bootstrap/scss/card";
+@import "Vendors/bootstrap/scss/accordion";
+@import "Vendors/bootstrap/scss/breadcrumb";
+@import "Vendors/bootstrap/scss/pagination";
+@import "Vendors/bootstrap/scss/badge";
+@import "Vendors/bootstrap/scss/alert";
+@import "Vendors/bootstrap/scss/progress";
+@import "Vendors/bootstrap/scss/list-group";
+@import "Vendors/bootstrap/scss/close";
+@import "Vendors/bootstrap/scss/toasts";
+@import "Vendors/bootstrap/scss/modal";
+@import "Vendors/bootstrap/scss/tooltip";
+@import "Vendors/bootstrap/scss/popover";
+@import "Vendors/bootstrap/scss/carousel";
+@import "Vendors/bootstrap/scss/spinners";
+@import "Vendors/bootstrap/scss/offcanvas";
+@import "Vendors/bootstrap/scss/placeholders";
+
+// Helpers
+@import "Vendors/bootstrap/scss/helpers";
+
+// Utilities
+@import "Vendors/bootstrap/scss/utilities/api";
+// scss-docs-end import-stack

@@ -1,0 +1,66 @@
+﻿@namespace GeekSeven.GeekUI.Layout
+
+@*Required upgrade*@
+
+@switch (ContainerType)
+{
+    case EContainerType.All:
+        {
+            <div class="container">
+                @ChildContent
+            </div>
+        }
+        break;
+    case EContainerType.ExtraLarge:
+        {
+            <div class="container-xl">
+                @ChildContent
+            </div>
+        }
+        break;
+    case EContainerType.Fluid:
+        {
+            <div class="container-fluid">
+                @ChildContent
+            </div>
+        }
+        break;
+    case EContainerType.Large:
+        {
+            <div class="container-lg">
+                @ChildContent
+            </div>
+        }
+        break;
+    case EContainerType.Medium:
+        {
+            <div class="container-md">
+                @ChildContent
+            </div>
+        }
+        break;
+    case EContainerType.Small:
+        {
+            <div class="container-sm">
+                @ChildContent
+            </div>
+        }
+        break;
+    default:
+        {
+            <div class="container">
+                @ChildContent
+            </div>
+        }
+        break;
+}
+
+@code {
+
+    [Parameter]
+    public EContainerType ContainerType { get; set; } = EContainerType.All;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+}

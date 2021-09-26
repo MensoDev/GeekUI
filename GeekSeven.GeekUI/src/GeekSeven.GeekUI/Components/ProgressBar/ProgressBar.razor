@@ -1,0 +1,19 @@
+﻿@namespace GeekSeven.GeekUI.Components
+
+
+<div class="progress">
+    <div class="progress-bar bg-@BackgroundColor.ToString().ToLower() @(IsStriped ? "progress-bar-striped":"")" style="width: @(Value+"%")" role="progressbar" aria-valuenow="@Value" aria-valuemin="@MinValue" aria-valuemax="@MaxValue"></div>
+</div>
+
+
+@code
+{
+    [Parameter] public double MaxValue { get; set; }
+    [Parameter] public double MinValue { get; set; }
+    [Parameter] public double Value { get; set; }
+
+    [Parameter] public EColor BackgroundColor { get; set; }
+    [Parameter] public bool IsStriped { get; set; }
+    [Parameter] public bool IsAnimate { get; set; }
+
+}

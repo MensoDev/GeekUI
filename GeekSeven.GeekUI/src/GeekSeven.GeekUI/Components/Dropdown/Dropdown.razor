@@ -1,0 +1,22 @@
+﻿@namespace GeekSeven.GeekUI.Components
+
+<div class="dropdown @(IsShow ? "show":"")">
+    <button class="btn btn-@BackgroundColor.ToString().ToLower() dropdown-toggle" @onclick="(() => IsShow = !IsShow)" @onfocusout="(() => IsShow = false)" type="button" id="@ID" data-toggle="dropdown" aria-haspopup="true" aria-expanded="@IsShow">
+        @Title
+    </button>
+    <div class="dropdown-menu @(IsShow ? "show":"")" aria-labelledby="@ID">
+        @ChildContent
+    </div>
+</div>
+
+
+@code{
+
+    private string ID { get; set; } = Guid.NewGuid().ToString().Replace("-", "");
+
+    [Parameter] public bool IsShow { get; set; }
+    [Parameter] public EColor BackgroundColor { get; set; }
+    [Parameter] public string Title { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+
+}

@@ -1,0 +1,13 @@
+﻿@namespace GeekSeven.GeekUI.Components
+
+<ul class="nav bg-@BackgroundColor.ToString().ToLower() @(IsPills ? "nav-pills":"") shadow-sm">
+    @ChildContent
+</ul>
+
+
+@code
+{
+    [Parameter] public EColor BackgroundColor { get; set; } = EColor.Light;
+    [Parameter] public bool IsPills { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+}

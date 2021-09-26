@@ -1,0 +1,46 @@
+﻿@namespace GeekSeven.GeekUI.Components
+
+<!-- As a link -->
+<nav class="navbar navbar-expand-lg @(BackgroundColor == EColor.Dark ? "navbar-light":"navbar-dark") bg-@BackgroundColor.ToString().ToLower()">
+    <a class="navbar-brand" href="@Link">
+        @if (Icon != ESegoeMDL2Assets.None)
+        {
+            <span class="mdl2">@Icon.ToIcon()</span>
+        }
+        @Title
+    </a>
+
+    <button class="navbar-toggler @(IsOpenMenu ? "":"collapsed")" @onclick="(() => IsOpenMenu = !IsOpenMenu)" type="button" data-toggle="collapse" data-target="#@Id" aria-controls="@Id" aria-expanded="@IsOpenMenu" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse @(IsOpenMenu ? "show":"")" id="@Id">
+        <ul class="navbar-nav">
+            @if (CommandLeft != null)
+            {
+                @CommandLeft
+            }
+        </ul>
+    </div>
+    @if (CommandRight != null)
+    {
+        @CommandRight
+    }
+
+</nav>
+
+
+@code
+{
+    private string Id { get; set; } = Guid.NewGuid().ToString().Replace("-", "");
+    [Parameter] public ESegoeMDL2Assets Icon { get; set; } = ESegoeMDL2Assets.None;
+    [Parameter] public EColor BackgroundColor { get; set; }
+    [Parameter] public string Title { get; set; }
+    [Parameter] public string Link { get; set; }
+    [Parameter] public bool IsOpenMenu { get; set; } = false;
+
+    [Parameter] public RenderFragment CommandLeft { get; set; }
+    [Parameter] public RenderFragment CommandRight { get; set; }
+
+
+}

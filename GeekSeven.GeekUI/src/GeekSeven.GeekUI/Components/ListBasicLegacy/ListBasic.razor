@@ -1,0 +1,78 @@
+﻿@namespace GeekSeven.GeekUI.Components
+@typeparam TEntity
+@using System.Linq
+
+<CascadingValue Value="BackgroundColor" Name="BackgroundColor">
+    <CascadingValue Value="SelectedItem" Name="SelectedItem">
+        <ul class="list-group">
+            @if (Source != null)
+            {
+                @if (ItemTemplate != null)
+                {
+                    @foreach (var item in Source)
+                    {
+                        if (item.Equals(SelectedItem))
+                        {
+                            <li class="list-group-item list-group-item-action p-0 active" style="cursor: pointer;" @onclick="(() => OnSelectecItem(item))">
+                                @ItemTemplate(item)
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="list-group-item list-group-item-action p-0" style="cursor: pointer;" @onclick="(() => OnSelectecItem(item))">
+                                @ItemTemplate(item)
+                            </li>
+                        }
+                    }
+                }
+                else
+                {
+                    @foreach (var item in Source)
+                    {
+                        if (item.Equals(SelectedItem))
+                        {
+                            <li class="list-group-item list-group-item-action active" style="cursor: pointer;" @onclick="(() => OnSelectecItem(item))">
+                                @item
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="list-group-item list-group-item-action" style="cursor: pointer;" @onclick="(() => OnSelectecItem(item))">
+                                @item
+                            </li>
+                        }
+                    }
+                }
+            }
+            else
+            {
+                @if (Content != null)
+                {
+                    @Content
+                }
+                else
+                {
+                    <li class="list-group-item list-group-item-action list-group-item-primary disabled" aria-disabled="true">@NoItemText</li>
+                }
+            }
+        </ul>
+    </CascadingValue>
+</CascadingValue>
+
+
+@code{
+    [Parameter] public EColor BackgroundColor { get; set; }
+    [Parameter] public RenderFragment<TEntity> ItemTemplate { get; set; }
+    [Parameter] public List<TEntity> Source { get; set; }
+    [Parameter] public RenderFragment Content { get; set; }
+    [Parameter] public string NoItemText { get; set; } = "no item";
+    [Parameter] public TEntity SelectedItem { get; set; }
+
+    [Parameter] public EventCallback<object> OnChangeSelected { get; set; }
+
+    public async void OnSelectecItem(TEntity item)
+    {
+        SelectedItem = item;
+        await OnChangeSelected.InvokeAsync(item);
+    }
+}

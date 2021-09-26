@@ -1,0 +1,30 @@
+﻿@namespace GeekSeven.GeekUI.Layout
+
+<table class="table table-@BackgroundColor.ToString().ToLower() @(IsStriped ? "table-striped":"") @(IsBordered ? "table-bordered":"") @(IsBorderless ? "table-borderless":"") @(IsHoverable ? "table-hover" : "") @(IsSmall ? "table-sm":"") @Responsive.ToStringResponsiveTable()">
+    <caption>@Subtitle</caption>
+    <thead class=" thead-@HeaderColor.ToString().ToLower()">
+        <tr>
+            @ColumnsContent
+        </tr>
+    </thead>
+    <tbody>
+        @RowsContent
+    </tbody>
+</table>
+
+
+@code
+{
+    [Parameter] public RenderFragment ColumnsContent { get; set; }
+    [Parameter] public RenderFragment RowsContent { get; set; }
+    [Parameter] public EColor BackgroundColor { get; set; } = EColor.Light;
+    [Parameter] public EColor HeaderColor { get; set; } = EColor.None;
+    [Parameter] public ETableResponsive Responsive { get; set; } = ETableResponsive.None;
+    [Parameter] public bool IsStriped { get; set; }
+    [Parameter] public bool IsBordered { get; set; }
+    [Parameter] public bool IsBorderless { get; set; }
+    [Parameter] public bool IsHoverable { get; set; }
+    [Parameter] public bool IsSmall { get; set; }
+    [Parameter] public string Subtitle { get; set; }
+
+}

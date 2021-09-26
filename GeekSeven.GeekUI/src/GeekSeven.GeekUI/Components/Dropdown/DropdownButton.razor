@@ -1,0 +1,11 @@
+﻿@namespace GeekSeven.GeekUI.Components
+
+<button class="dropdown-item @(IsDisabled ? "disabled":"") @(IsSelected ? "active":"")" type="button">@Title</button>
+
+
+@code{
+    [Parameter] public string Title {get; set;}
+
+    [Parameter] public bool IsDisabled {get;set;}
+    [Parameter] public bool IsSelected {get;set;}
+}

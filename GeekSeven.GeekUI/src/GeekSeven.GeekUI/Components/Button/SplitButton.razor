@@ -1,0 +1,24 @@
+﻿@namespace GeekSeven.GeekUI.Components
+<!-- Example split danger button -->
+<div class="btn-group @(IsShow ? "show":"") @SplitDirection.ToESplitButtonDirectionString()">
+    <button type="button" class="btn btn-@BackgroundColor.ToString().ToLower()">@Title</button>
+    <button type="button" style="margin-left: 0.8px!important;" class="btn btn-@BackgroundColor.ToString().ToLower() dropdown-toggle dropdown-toggle-split" @onclick="(() => IsShow = !IsShow)" @onfocusout="(() => IsShow = false)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="@IsShow">
+        <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <div class="dropdown-menu @(IsShow ? "show":"")">
+        @ChildContent
+    </div>
+</div>
+
+
+@code{
+
+    private string ID { get; set; } = Guid.NewGuid().ToString();
+
+    [Parameter] public bool IsShow { get; set; }
+    [Parameter] public EColor BackgroundColor { get; set; }
+    [Parameter] public ESplitButtonDirection SplitDirection { get; set; }
+    [Parameter] public string Title { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+
+}

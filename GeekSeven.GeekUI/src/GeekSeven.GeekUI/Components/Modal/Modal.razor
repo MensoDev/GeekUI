@@ -1,0 +1,48 @@
+﻿@namespace GeekSeven.GeekUI.Components
+@typeparam TEntity
+@*modal-dialog-scrollable*@
+<div class="modal fade @(IsShow ? "show":"")" tabindex="-1" role="dialog" aria-labelledby="@Id" style="@(IsShow ? "display: block;":"display: none;")" aria-hidden="@(!IsShow)" aria-modal="@IsShow">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="@Id">@Title</h5>
+                <button type="button" class="btn btn-primary" @onclick="Close">
+                    <h1 class="mdl2 mdl2-cancel"></h1>
+                </button>
+            </div>
+            <div class="modal-body">
+                @ModalContent
+            </div>
+            @if (ModalFooter != null)
+            {
+                <div class="modal-footer">
+                    @ModalFooter
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@if (IsShow)
+{
+    <div class="modal-backdrop fade show"></div>
+}
+
+@code
+{
+    public string Id { get; set; } = Guid.NewGuid().ToString().Replace("-", "");
+    [Parameter] public string Title { get; set; }
+    [Parameter] public bool IsShow { get; set; }
+    [Parameter] public RenderFragment ModalContent { get; set; }
+    [Parameter] public RenderFragment ModalFooter { get; set; }
+    [Parameter] public TEntity EntityContext { get; set; }
+    [Parameter] public EventCallback<object> OnCloseEvent { get; set; }
+
+    private async void Close()
+    {
+        IsShow = false;
+        //await JSRuntime.InvokeVoidAsync("BootLEGO.removeBodyClass", "modal-open");
+        await OnCloseEvent.InvokeAsync(EntityContext);
+    }
+
+}

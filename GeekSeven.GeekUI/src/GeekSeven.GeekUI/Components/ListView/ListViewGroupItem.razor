@@ -1,0 +1,68 @@
+﻿@namespace GeekSeven.BoGeekUIotLEGO.Components
+@inject NavigationManager navigationManager
+
+
+<div class=" listview-container" IsShowItems="@(IsExpanded ? "true":"false")" IsSelectedItem="@(IsSelectedItem ? "true":"false")">
+    <a class=" listview-item" @onclick="OnGroupHeaderClick">
+        <span class="listview-icon">
+            @if (GroupIconMDL2 != ESegoeMDL2Assets.None)
+            {
+                <i class="gs-Icon">@GroupIconMDL2.ToIcon()</i>
+            }
+            else if (!string.IsNullOrEmpty(GroupIconIMG))
+            {
+                <img src="@GroupIconIMG" alt="Icon Item List View">
+            }
+            else
+            {
+                <i class="gs-Icon gs-icon-List"></i>
+            }
+        </span>
+        <span class="listview-label">@GroupName</span>
+        <span class="listview-icon"><i class="gs-Icon gs-icon-ChevronDown"></i></span>
+    </a>
+
+    <CascadingValue Value="Service" Name="ListViewGroupService" IsFixed="true">
+        @ChildContent
+    </CascadingValue>
+
+</div>
+
+
+@code {
+    [Parameter] public string GroupName { get; set; }
+    [Parameter] public string DefaultLink { get; set; }
+
+    [Parameter] public ESegoeMDL2Assets GroupIconMDL2 { get; set; } = ESegoeMDL2Assets.None;
+    [Parameter] public string GroupIconIMG { get; set; } = string.Empty;
+
+    [Parameter] public bool IsExpanded { get; set; }
+    [Parameter] public bool IsSelectedItem { get; set; }
+
+    [Parameter] public RenderFragment ChildContent { get; set; }
+
+    public ListViewGroupItemService Service { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Service = new ListViewGroupItemService();
+        Service.OnChangeSelectedItem += OnChangeSelectedItem;
+    }
+
+    public void OnChangeSelectedItem(bool isSelected)
+    {
+        IsSelectedItem = isSelected;
+        StateHasChanged();
+    }
+
+    public void OnGroupHeaderClick()
+    {
+        IsExpanded = !IsExpanded;
+
+        if (IsSelectedItem == false)
+        {
+            navigationManager.NavigateTo(DefaultLink);
+        }
+    }
+
+}

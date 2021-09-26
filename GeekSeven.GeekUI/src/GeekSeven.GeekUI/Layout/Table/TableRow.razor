@@ -1,0 +1,16 @@
+﻿@namespace GeekSeven.GeekUI.Layout
+
+<tr class="@(BackgroundColor == EColor.None ? "" : $"{GetColorSchema()}{BackgroundColor.ToString().ToLower()}")">
+    @ChildContent
+</tr>
+
+@code {
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public EColor BackgroundColor { get; set; } = EColor.None;
+    [Parameter] public bool IsSolidColor { get; set; }
+
+    private string GetColorSchema()
+    {
+        return IsSolidColor ? "bg-" : "table-";
+    }
+}

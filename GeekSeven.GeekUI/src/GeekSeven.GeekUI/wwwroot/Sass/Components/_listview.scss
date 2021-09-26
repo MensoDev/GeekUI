@@ -1,0 +1,201 @@
+
+
+%d-flex-d-row{
+    display: flex;
+    flex-direction: row;
+}
+
+%d-flex-d-col{
+    display: flex;
+    flex-direction: column;
+}
+%d-flex-shrink {
+    flex-shrink: 0;
+}
+%d-flex-grow-1{
+    flex-grow: 1;
+}
+
+%d-flex-center {
+    justify-content: center;
+    align-items: center;
+}
+%listview-base-icon {
+    min-width: $splitview-icon-size;
+    font-size: 1rem;
+    line-height: 1rem;
+}
+
+%listview-cursor-pointer {
+    cursor: pointer;
+}
+
+%left-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: $hover-backgroundcolor;
+    content: "";
+}
+
+.listview {
+    @extend %d-flex-d-col;
+    position: relative;
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .listview-container{
+        @extend %d-flex-d-col;
+        position: relative;
+        
+        &[IsShowItems=true][IsSelectedItem=true]::after,
+        &[IsShowItems=false][IsSelectedItem=true]::after {
+            @extend %left-bar;
+        }
+        &[IsShowItems=true][IsSelectedItem=true],
+        &[IsShowItems=false][IsSelectedItem=true]{
+            background-color: $hover-backgroundcolor;
+        }
+    }
+
+    .listview-item,
+    .listview-item-secondary {
+        @extend %d-flex-d-row;
+        @extend %listview-cursor-pointer;
+        align-items: center;
+        min-height: $splitview-icon-size;
+        flex-wrap: nowrap;
+        position: relative;
+        &:hover {
+            background-color: $hover-backgroundcolor;
+        }
+
+
+    }
+
+    .listview-item-secondary {
+        min-height: $splitview-icon-size - (($splitview-icon-size * 15) / 100);
+    }
+
+    [IsSelected=true] {
+        background-color: $hover-backgroundcolor;
+        &::after {
+            @extend %left-bar;
+        }        
+    }
+
+    .listview-container[IsShowItems=true] .listview-item-secondary{
+        display: flex;
+    }
+    .listview-container[IsShowItems=true][IsSelectedItem=false] .listview-item-secondary,
+    .listview-container[IsShowItems=false] .listview-item-secondary{
+        display: none;
+    }
+
+    .listview-item-group {
+        @extend %d-flex-d-row;
+        .listview-item:first-child {
+            flex-grow: 1;
+        }
+    }   
+
+    .listview-label {
+        @extend %d-flex-d-row;
+        @extend %d-flex-grow-1;
+        flex-wrap: nowrap;
+        white-space: nowrap;
+    }
+    .listview-icon {
+        @extend %d-flex-d-row;
+        @extend %d-flex-center;
+        @extend %listview-base-icon;
+
+        img {
+            height: 1.5rem;
+            width: 1.5rem;
+        }
+    }
+
+    .listview-separator {
+        background-color: rgba(255, 255, 255, 0.4);
+        @extend %d-flex-d-row;
+        flex-shrink: 0;
+        height: 1px;
+        margin: 5px 10px;
+    }
+    
+    .listview-head {
+        @extend %d-flex-d-row;
+        @extend %d-flex-shrink;
+        font-weight: bold;
+        font-size: .8rem;
+        color: rgba(255, 255, 255, 0.4);
+        margin: 5px 10px;
+        text-transform: uppercase;
+        user-select: none;
+    }
+
+    @include media-breakpoint-only(xs) {
+        
+    }
+    @include media-breakpoint-only(sm) {
+        
+    }
+    @include media-breakpoint-only(md) {
+        &[IsCompactList=true] .listview-label {
+            display: none;
+        }
+        &[IsCompactList=true] .listview-item-group {
+            flex-direction: column;
+        }
+        &[IsCompactList=true] .listview-head {
+            display: none;
+        }
+    }
+    @include media-breakpoint-only(lg) {
+        &[IsCompactList=true] .listview-label {
+            display: none;
+        }
+        &[IsCompactList=true] .listview-item-group {
+            flex-direction: column;
+        }
+        &[IsCompactList=true] .listview-head {
+            display: none;
+        }
+    }
+    @include media-breakpoint-only(xl) {
+        &[IsCompactList=true] .listview-label {
+            display: none;
+        }
+        &[IsCompactList=true] .listview-item-group {
+            flex-direction: column;
+        }
+        &[IsCompactList=true] .listview-head {
+            display: none;
+        }
+    }
+}
+
+
+
+@each $color, $value in $theme-colors {
+    .listview-#{$color} .listview-item[IsSelected=true],
+    .listview-#{$color} .listview-item-secondary[IsSelected=true] {
+        &::after {
+            background-color: lighten($color: $value, $amount: 10)!important;
+            z-index: 700;
+        }
+    }
+}
+
+@each $color, $value in $theme-colors {
+    .listview-#{$color} .listview-container[IsShowItems=false][IsSelectedItem=true]::after {
+        background-color: lighten($color: $value, $amount: 10)!important;
+        z-index: 700;
+    }
+}

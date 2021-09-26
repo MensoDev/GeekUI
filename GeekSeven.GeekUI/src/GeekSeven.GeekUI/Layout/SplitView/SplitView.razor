@@ -1,0 +1,56 @@
+﻿@namespace GeekSeven.GeekUI.Layout
+
+
+<main class="splitview" IsTogglePanel="@(IsOpenPanel ? "true":"false")">
+
+
+    <header class="splitview-header bg-dark text-white">
+
+        <a class="splitview-toggle-menu" @onclick="(() => { IsOpenPanel = !IsOpenPanel; })">
+            <span class="gs-Icon gs-icon-GlobalNavButton "></span>
+        </a>
+
+        <a class="splitview-header-title" href="@AppLink">
+            @if (AppIconMDL2 != ESegoeMDL2Assets.None)
+            {<span class="splitview-header-iconapp gs-Icon">@AppIconMDL2.ToIcon()</span>}
+            else if (!string.IsNullOrEmpty(AppLogoIMG))
+            {<span class="splitview-header-iconapp "> <img alt="Logo App" src="@AppLogoIMG" /> </span>}
+            else
+            {<span class="splitview-header-iconapp gs-Icon gs-icon-AADLogo"></span>}
+            <span class="splitview-header-label">@Title</span>
+        </a>
+
+        @if (HeaderContent != null)
+            @HeaderContent
+
+    </header>
+
+    <section class="splitview-body">
+        <div class="splitview-panel">
+            @if (PanelContent != null)
+                @PanelContent
+        </div>
+        <div class="splitview-content">
+            @if (BodyContent != null)
+                @BodyContent
+        </div>
+        <div class="splitview-backdrop" @onclick="(() => { IsOpenPanel = !IsOpenPanel; })"></div>
+    </section>
+
+</main>
+
+
+
+
+@code {
+    [Parameter] public bool IsOpenPanel { get; set; } = true;
+    [Parameter] public string Title { get; set; } = "SplitView Title";
+
+    [Parameter] public string AppLink { get; set; } = "/";
+    [Parameter] public ESegoeMDL2Assets AppIconMDL2 { get; set; } = ESegoeMDL2Assets.None;
+    [Parameter] public string AppLogoIMG { get; set; } = "";
+
+    [Parameter] public RenderFragment HeaderContent { get; set; }
+    [Parameter] public RenderFragment PanelContent { get; set; }
+    [Parameter] public RenderFragment BodyContent { get; set; }
+}

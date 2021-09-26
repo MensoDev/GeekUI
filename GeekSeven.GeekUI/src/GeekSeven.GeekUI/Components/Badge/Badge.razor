@@ -1,0 +1,14 @@
+﻿@namespace GeekSeven.GeekUI.Components
+
+<span class="badge @(IsPillMode ? "badge-pill":"") badge-@(BadgeColor.ToString().ToLower())">@ChildContent</span>
+
+
+@code {
+    [Parameter]
+    public EColor BadgeColor { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    public bool IsPillMode { get; set; }
+}

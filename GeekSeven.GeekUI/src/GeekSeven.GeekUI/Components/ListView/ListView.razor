@@ -1,0 +1,18 @@
+﻿@namespace GeekSeven.GeekUI.Components
+
+<nav class="listview @(AccentColor != EColor.None ? $"listview-{AccentColor.ToString().ToLower()}":"")" IsCompactList="@(IsCompactList ? "true":"false")">
+
+    @*<CascadingValue Value="SelectedLink" Name="SelectedLink">
+
+        </CascadingValue>*@
+
+    @ChildContent
+
+</nav>
+
+@code {
+    [Parameter] public EColor AccentColor { get; set; } = EColor.Primary;
+    [Parameter] public bool IsCompactList { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    //[Parameter] public string SelectedLink { get; set; }
+}

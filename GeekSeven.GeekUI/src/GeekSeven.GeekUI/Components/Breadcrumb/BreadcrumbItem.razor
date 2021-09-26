@@ -1,0 +1,10 @@
+﻿@namespace GeekSeven.GeekUI.Components
+
+<li class="breadcrumb-item"><a href="@Link">@Title</a></li>
+
+@code{
+    [Parameter]
+    public string Title { get; set; } = "Null";
+    [Parameter]
+    public string Link { get; set; } = "#";
+}

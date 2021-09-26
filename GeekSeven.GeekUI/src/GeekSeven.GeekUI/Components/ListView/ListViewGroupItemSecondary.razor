@@ -1,0 +1,171 @@
+﻿@namespace GeekSeven.GeekUI.Components
+@inject NavigationManager navigationManager
+@using Microsoft.AspNetCore.Components.Rendering
+@using Microsoft.AspNetCore.Components.Routing
+
+<a href="@NavigationLink" class=" listview-item-secondary" IsSelected="@CssBool">
+    <span class="listview-icon">
+        @if (IconMDL2 != ESegoeMDL2Assets.None)
+        {
+            <i class="gs-Icon">@IconMDL2.ToIcon()</i>
+        }
+        else if (!string.IsNullOrEmpty(IconIMG))
+        {
+            <img src="@IconIMG" alt="Icon Item List View">
+        }
+        else
+        {
+            <i class="gs-Icon gs-icon-List"></i>
+        }
+    </span>
+    <span class="listview-label">@Title</span>
+</a>
+
+@code {
+    [Parameter] public ESegoeMDL2Assets IconMDL2 { get; set; } = ESegoeMDL2Assets.None;
+    [Parameter] public string IconIMG { get; set; } = string.Empty;
+    [Parameter] public string Title { get; set; }
+
+    [CascadingParameter(Name = "ListViewGroupService")] public ListViewGroupItemService Service { get; set; }
+
+    [Parameter] public string NavigationLink { get; set; }
+    [Parameter] public NavLinkMatch Match { get; set; }
+
+    public bool IsActive { get; set; }
+    private string CssBool = "false";
+    private string _hrefAbsolute;
+
+    protected override void OnInitialized()
+    {
+        navigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object sender, LocationChangedEventArgs args)
+    {
+        // We could just re-render always, but for this component we know the
+        // only relevant state change is to the _isActive property.
+        var shouldBeActiveNow = ShouldMatch(args.Location);
+        if (shouldBeActiveNow != IsActive)
+        {
+            IsActive = shouldBeActiveNow;
+            UpdateSelectionState();
+            StateHasChanged();
+        }
+    }
+
+    protected override void OnParametersSet()
+    {
+        // Update computed state
+        var href = (string)null;
+        if (!string.IsNullOrEmpty(NavigationLink))
+        {
+            href = Convert.ToString(NavigationLink);
+        }
+
+        _hrefAbsolute = href == null ? null : navigationManager.ToAbsoluteUri(href).AbsoluteUri;
+        IsActive = ShouldMatch(navigationManager.Uri);
+
+        UpdateSelectionState();
+    }
+
+    /// <inheritdoc />
+    public void Dispose()
+    {
+        // To avoid leaking memory, it's important to detach any event handlers in Dispose()
+        navigationManager.LocationChanged -= OnLocationChanged;
+    }
+
+    private void UpdateSelectionState()
+    {
+        //CssBool = IsActive ? CombineWithSpace(_class, ActiveClass ?? DefaultActiveClass) : _class;
+        CssBool = IsActive ? "true" : "false";
+        Service.ChangeSelectedItem(IsActive, NavigationLink);
+
+        //if (NavigationLink == Service.CurrentLink)
+        //{
+        //    if (Service.IsSelectedItem != IsActive) { Service.ChangeSelectedItem(IsActive, NavigationLink); }
+        //    else return;
+        //}
+        //else
+        //{
+        //    if(IsActive)
+        //}
+
+    }
+
+    private bool ShouldMatch(string currentUriAbsolute)
+    {
+        if (_hrefAbsolute == null)
+        {
+            return false;
+        }
+
+        if (EqualsHrefExactlyOrIfTrailingSlashAdded(currentUriAbsolute))
+        {
+            return true;
+        }
+
+        if (Match == NavLinkMatch.Prefix
+            && IsStrictlyPrefixWithSeparator(currentUriAbsolute, _hrefAbsolute))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool EqualsHrefExactlyOrIfTrailingSlashAdded(string currentUriAbsolute)
+    {
+        if (string.Equals(currentUriAbsolute, _hrefAbsolute, StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        if (currentUriAbsolute.Length == _hrefAbsolute.Length - 1)
+        {
+            // Special case: highlight links to http://host/path/ even if you're
+            // at http://host/path (with no trailing slash)
+            //
+            // This is because the router accepts an absolute URI value of "same
+            // as base URI but without trailing slash" as equivalent to "base URI",
+            // which in turn is because it's common for servers to return the same page
+            // for http://host/vdir as they do for host://host/vdir/ as it's no
+            // good to display a blank page in that case.
+            if (_hrefAbsolute[_hrefAbsolute.Length - 1] == '/'
+                && _hrefAbsolute.StartsWith(currentUriAbsolute, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private string CombineWithSpace(string str1, string str2)
+            => str1 == null ? str2
+            : (str2 == null ? str1 : $"{str1} {str2}");
+
+    private static bool IsStrictlyPrefixWithSeparator(string value, string prefix)
+    {
+        var prefixLength = prefix.Length;
+        if (value.Length > prefixLength)
+        {
+            return value.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)
+                && (
+                    // Only match when there's a separator character either at the end of the
+                    // prefix or right after it.
+                    // Example: "/abc" is treated as a prefix of "/abc/def" but not "/abcdef"
+                    // Example: "/abc/" is treated as a prefix of "/abc/def" but not "/abcdef"
+                    prefixLength == 0
+                    || !char.IsLetterOrDigit(prefix[prefixLength - 1])
+                    || !char.IsLetterOrDigit(value[prefixLength])
+                );
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
+}

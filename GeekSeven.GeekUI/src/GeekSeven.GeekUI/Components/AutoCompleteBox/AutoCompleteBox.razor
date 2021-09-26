@@ -1,0 +1,129 @@
+﻿@namespace GeekSeven.GeekUI.Components
+@using System.Linq
+
+@typeparam TEntity
+
+
+<div class="AutoComplete">
+    <div class="AutoComplete-Input">
+        <input type="text" class="form-control" placeholder="@Placeholder"
+               @bind-value="SearchText"
+               @bind-value:event="oninput"
+               @onkeyup="HandleKeyUp">
+        @*<span class="gs-Icon AutoComplete-Toggle"></span>*@
+    </div>
+    @if (IsShowingSuggestions)
+    {
+        <div class="AutoComplete-Options">
+            @if (Suggestions != null)
+            {
+                foreach (var item in Suggestions)
+                {
+                    <div class="AutoComplete-Option" @onclick="(() => OnSelectedItemEvent(item))">@SelectedTemplate(item)</div>
+                }
+            }
+            else
+            {
+                if (NotFoundTemplate != null)
+                {
+                    <div class="AutoComplete-Option">@NotFoundTemplate</div>
+                }
+                else
+                {
+                    <div class="AutoComplete-Option">Not Found Item</div>
+                }
+            }
+        </div>
+    }
+</div>
+
+
+@code {
+    [Parameter] public Func<string, Task<IEnumerable<TEntity>>> SearchMethod { get; set; }
+    [Parameter] public TEntity Value { get; set; }
+    [Parameter] public string Placeholder { get; set; }
+
+    [Parameter] public RenderFragment NotFoundTemplate { get; set; }
+    //[Parameter] public RenderFragment<TEntity> ResultTemplate { get; set; }
+    [Parameter] public RenderFragment<TEntity> SelectedTemplate { get; set; }
+
+    [Parameter] public EventCallback<TEntity> ValueChanged { get; set; }
+    [Parameter] public EventCallback OnSelectedItem { get; set; }
+
+    private TEntity[] Suggestions { get; set; } = new TEntity[0];
+    private bool IsShowingSuggestions { get; set; }
+    private bool IsSearching { get; set; }
+    private string SearchText { get; set; } = "";
+
+    protected override void OnParametersSet()
+    {
+        if (Value != null)
+            SearchText = Value.ToString();
+        else
+            SearchText = "";
+
+        base.OnParametersSet();
+    }
+
+    private async Task HandleKeyUp(KeyboardEventArgs args)
+    {
+        if (args.Key == "Enter")
+        {
+            await Search();
+        }
+
+        if (args.Key == "Escape")
+        {
+            ReseteControl();
+        }
+
+        if (IsSearching) return;
+
+        await Search();
+
+    }
+
+    private async Task HandeFocusOut()
+    {
+        IsShowingSuggestions = false;
+        await Task.CompletedTask;
+    }
+
+    private async Task Search()
+    {
+        if (SearchText.Length < 1)
+        {
+            //ShowHelpTemplate = true;
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+
+        //ShowHelpTemplate = false;
+        IsSearching = true;
+        await InvokeAsync(StateHasChanged);
+        Suggestions = (await SearchMethod?.Invoke(SearchText)).ToArray();
+
+        IsSearching = false;
+        IsShowingSuggestions = true;
+        //SelectedIndex = 0;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private void ReseteControl()
+    {
+        SearchText = "";
+        IsShowingSuggestions = false;
+        IsSearching = false;
+        Suggestions = new TEntity[0];
+    }
+
+    public async Task OnSelectedItemEvent(TEntity entity)
+    {
+        Value = entity;
+        IsShowingSuggestions = false;
+        SearchText = Value.ToString();
+        await ValueChanged.InvokeAsync(Value);
+        await OnSelectedItem.InvokeAsync(Value);
+    }
+
+}
