@@ -4,6 +4,13 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Description>GeekUI is a Framework for Blazor and Razor pages</Description>
+    <Copyright>Geek Seven 2021</Copyright>
+    <RepositoryUrl>https://github.com/emersont7d/GeekUI</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Company>Geek Seven</Company>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
 
